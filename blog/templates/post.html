@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="lighter">
+    <p>{{ post.author.username }} <small>  Posted on {{ post.date.strftime('%Y-%m-%d') }}</small></p>
+    <hr>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+    {% if current_user==post.author %}
+    <a href="{{ url_for('updatePost', post_id=post.id) }}">Edit</a>
+    <a href="{{ url_for('deletePost', post_id=post.id) }}">Delete</a>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('reply', post_id=post.id) }}">Reply</a>
+    {% endif %}
+</div>
+
+    {% if post.replies %}
+
+        {% for reply in post.replies %}
+        <div class="lighter" style="margin-left: 55px;">
+            <p>{{ reply.writer.username }} <small>  Replied on {{ post.date.strftime('%Y-%m-%d') }}</small></p>
+            <hr>
+            <h3>{{ reply.title }}</h3>
+            <p>{{ reply.content }}</p>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<br>
+<div class="lighter">
+    <h1>Public Posts</h1>
+    <hr>
+    <p>Here you'll find all public posts on this platform</p>    
+</div>
+    {% for post in posts %}
+    <div class="lighter">
+        <p>{{ post.author.username }} <small>  Posted on {{ post.date.strftime('%Y-%m-%d') }}</small></p>
+        <hr>
+        <h3><a href="{{ url_for('seePost', post_id=post.id) }}" style="color:white">{{ post.title }}</a></h3>
+        <p>{{ post.content }}</p>
+        {% if current_user==post.author %}
+        <a href="{{ url_for('updatePost', post_id=post.id) }}">Edit</a>
+        <a href="{{ url_for('deletePost', post_id=post.id) }}">Delete</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endblock %}
