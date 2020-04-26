@@ -4,14 +4,14 @@ from blog.forms import Registration, Login, PostForm
 from blog.models import User, Post, Reply
 from flask_login import login_user, current_user, logout_user, login_required
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def home():
     posts = Post.query.all()
     posts.reverse()
     return render_template('home.html', posts=posts)
 
-@app.route('/about')
+@app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
 
